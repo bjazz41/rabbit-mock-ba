@@ -1,0 +1,22 @@
+# Service exposing rabbit externally
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbit
+  labels:
+    app: rabbit
+spec:
+  ports:
+  - nodePort: 32000
+    port: 32000
+    protocol: TCP
+    targetPort: rabbit-http
+    name: rabbit-http
+  - port: 5672
+    protocol: TCP
+    targetPort: rabbit-amqp
+    name: rabbit-amqp
+  selector:
+    app: rabbit
+  sessionAffinity: None
+  type: NodePort
